@@ -92,6 +92,7 @@ export const createBooking = async (req, res, next) => {
 
     io.emit("slotBooked", {
       expert: booking.expert._id,
+      expertId: booking.expert._id,
       date: booking.date,
       timeSlot: booking.timeSlot,
       bookingId: booking._id,

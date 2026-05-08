@@ -1,4 +1,22 @@
 import { Expert } from "../models/Expert.js";
+import { Booking } from "../models/Booking.js";
+
+const getBookedSlotKeys = async (expertId) => {
+  const bookings = await Booking.find({ expert: expertId }).select("date timeSlot");
+
+  return new Set(
+    bookings.map((booking) => `${booking.date}|${booking.timeSlot}`)
+  );
+};
+
+const mapSlotsWithBookingStatus = (availableSlots, bookedSlotKeys) =>
+  availableSlots.map((group) => ({
+    date: group.date,
+    slots: group.slots.map((time) => ({
+      time,
+      isBooked: bookedSlotKeys.has(`${group.date}|${time}`),
+    })),
+  }));
 
 export const getExperts = async (req, res, next) => {
   try {
@@ -52,9 +70,18 @@ export const getExpertById = async (req, res, next) => {
       });
     }
 
+    const bookedSlotKeys = await getBookedSlotKeys(expert._id);
+    const expertData = expert.toObject();
+
     res.json({
       success: true,
-      data: expert,
+      data: {
+        ...expertData,
+        slotGroups: mapSlotsWithBookingStatus(
+          expertData.availableSlots,
+          bookedSlotKeys
+        ),
+      },
     });
   } catch (error) {
     if (error.name === "CastError") {
