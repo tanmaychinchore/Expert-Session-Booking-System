@@ -5,6 +5,7 @@ import http from "http";
 import { Server } from "socket.io";
 import { connectDB } from "./config/db.js";
 import { errorHandler, notFound } from "./middleware/errorHandler.js";
+import bookingRoutes from "./routes/bookingRoutes.js";
 import expertRoutes from "./routes/expertRoutes.js";
 
 const app = express();
@@ -34,6 +35,7 @@ app.get("/api/health", (req, res) => {
 });
 
 app.use("/api/experts", expertRoutes);
+app.use("/api/bookings", bookingRoutes);
 
 io.on("connection", (socket) => {
   console.log(`Socket connected: ${socket.id}`);
