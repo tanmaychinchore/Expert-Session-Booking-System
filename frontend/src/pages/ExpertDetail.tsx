@@ -137,7 +137,7 @@ export default function ExpertDetail() {
             <div>
               <h3>{expert.name}</h3>
               <p>{expert.bio}</p>
-              <div className="price-pill">${expert.price.toFixed(0)} / session</div>
+              <div className="price-pill">₹{expert.price.toFixed(0)} / session</div>
             </div>
           </div>
 

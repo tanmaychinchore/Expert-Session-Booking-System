@@ -88,7 +88,7 @@ export default function ExpertList({ search, category, onSearchChange, onCategor
             <div className="expert-footer">
               <span>{expert.experience}+ yrs</span>
               <span>⭐ {expert.rating}</span>
-              <span>${expert.price.toFixed(0)}</span>
+              <span>₹{expert.price.toFixed(0)}</span>
             </div>
             <Link to={`/experts/${expert._id}`} className="button button-primary">
               View booking page
@@ -97,12 +97,12 @@ export default function ExpertList({ search, category, onSearchChange, onCategor
         ))}
       </div>
 
-      <div className="pagination-row">
-        <button onClick={() => setPage((prev) => Math.max(1, prev - 1))} disabled={page <= 1}>
+      <div className="pagination-row" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '16px', marginTop: '32px' }}>
+        <button className="button button-ghost" onClick={() => setPage((prev) => Math.max(1, prev - 1))} disabled={page <= 1}>
           Previous
         </button>
-        <span>Page {page} of {totalPages}</span>
-        <button onClick={() => setPage((prev) => Math.min(totalPages, prev + 1))} disabled={page >= totalPages}>
+        <span style={{ fontWeight: 'bold' }}>Page {page} of {totalPages}</span>
+        <button className="button button-ghost" onClick={() => setPage((prev) => Math.min(totalPages, prev + 1))} disabled={page >= totalPages}>
           Next
         </button>
       </div>
