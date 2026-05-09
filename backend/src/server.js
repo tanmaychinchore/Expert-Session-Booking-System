@@ -7,6 +7,7 @@ import { connectDB } from "./config/db.js";
 import { errorHandler, notFound } from "./middleware/errorHandler.js";
 import bookingRoutes from "./routes/bookingRoutes.js";
 import expertRoutes from "./routes/expertRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
 
 const app = express();
 const server = http.createServer(app);
@@ -36,6 +37,7 @@ app.get("/api/health", (req, res) => {
 
 app.use("/api/experts", expertRoutes);
 app.use("/api/bookings", bookingRoutes);
+app.use("/api/auth", authRoutes);
 
 io.on("connection", (socket) => {
   console.log(`Socket connected: ${socket.id}`);
@@ -60,3 +62,4 @@ connectDB()
     console.error(`Failed to start server: ${error.message}`);
     process.exit(1);
   });
+

@@ -115,14 +115,14 @@ export const createBooking = async (req, res, next) => {
   }
 };
 
-export const getBookingsByEmail = async (req, res, next) => {
+export const getBookings = async (req, res, next) => {
   try {
     const email = req.query.email?.trim().toLowerCase();
-
-    if (!email || !emailRegex.test(email)) {
+    
+    if (!email) {
       return res.status(400).json({
         success: false,
-        message: "Valid email query parameter is required",
+        message: "Email query parameter is required",
       });
     }
 
